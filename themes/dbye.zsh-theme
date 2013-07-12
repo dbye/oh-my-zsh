@@ -1,3 +1,5 @@
+# -*- mode: shell-script(zsh) -*-
+#
 # A prompt theme for oh-my-zsh, based largely on prompt_clint that
 # ships with zsh. The vcs_info zstyle is a slightly modified version 
 # of what you'll find in the kolo oh-my-zsh theme.
@@ -72,8 +74,8 @@ autoload -Uz vcs_info
 
 # zstyles for the vcs_info bits
 # Stolen more or less intact from the kolo theme
-zstyle ':vcs_info:*' stagedstr '%F{green}*'
-zstyle ':vcs_info:*' unstagedstr '%F{yellow}*'
+zstyle ':vcs_info:*' stagedstr '%{%F{green}%}*'
+zstyle ':vcs_info:*' unstagedstr '%{%F{yellow}%}*'
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{11}%r'
 zstyle ':vcs_info:*' enable git svn
@@ -95,24 +97,25 @@ pc['\(']="%{$fg[$pcc[1]]%}("
 pc['\)']="%{$fg[$pcc[1]]%})"
 
 # Set the date:
-p_date="$pc['\[']%F{$pcc[2]}%D{%a %y/%m/%d %R %Z}$pc['\]']"
+p_date="%{$pc['\[']%}%F{$pcc[2]}%D{%a %y/%m/%d %R %Z}%{$pc['\]']%}"
 
 # If screen is running, add its current window number to the prompt
-[[ -n "$WINDOW" ]] && p_win="$pc['\(']%{$fg[$pcc[4]]%}$WINDOW$pc['\)']"
+[[ -n "$WINDOW" ]] && p_win="%{$pc['\(']%}%{$fg[$pcc[4]]%}$WINDOW%{$pc['\)']%}"
 
 # If running as root, make user name standout in prompt - black on red.
-p_user="%(0#.%{$bg[$pcc[6]]$fg[$pcc[7]]%}%n%{$bg[default]%}.%{$fg[$pcc[3]]%}%n)"
+p_user="%(0#.%{$bg[$pcc[6]]%}%{$fg[$pcc[7]]%}%n%{$bg[default]%}.%{$fg[$pcc[3]]%}%n)"
 
-p_usercwd="$pc['<']$p_user%{$fg[$pcc[3]]%}@%m%{$fg[default]%}$p_win%{$fg[$pcc[5]]%}:%{$fg[$pcc[4]]%}%~$pc['>']"
+p_usercwd="%{$pc['<']%}$p_user%{$fg[$pcc[3]]%}@%m%{$fg[default]%}$p_win%{$fg[$pcc[5]]%}:%{$fg[$pcc[4]]%}%~%{$pc['>']%}"
 
 p_ruby_ver="%(2V.$pc['\[']%{$fg[$pcc[2]]%}%2v/%3v$pc['\]'].)"
 
 p_shlvlhist="%{$fg_bold[$pcc[4]]%}zsh%(2L./$SHLVL.) %b%{$fg[$pcc[5]]%}%h "
-p_rc="%(?..%{$pc['\[']%}%{$fg[red]%}%?%1v%{$pc['\]']%} )"
+p_rc="%(?..$pc['\[']%{$fg[red]%}%?%1v$pc['\]'] )"
 
 # As an additional reminder, set the prompt character to print in red
 # if the shell's EUID is 0
-p_end="%f%B%(0#.%{$fg[red]%}.)%#%f%b "
+p_end="%f%B%(0#.%{%F{red}%}#.%%)%f%b "
+
 
 PROMPT='$p_date$p_ruby_ver 
 $p_usercwd
@@ -139,7 +142,7 @@ prompt_setup_precmd () {
     case $rbenv_scope in
       *variable ) 
           psvar[3]="rbenv(shell)" ;;
-      *.rbenv-version ) 
+      *.ruby-version ) 
           psvar[3]="rbenv(local)" ;;
       *version ) 
           psvar[3]="rbenv(global)" ;;
@@ -159,9 +162,9 @@ prompt_setup_precmd () {
 
   vcstype=" %{$fg_bold[$pcc[3]]%}(%s)"
   if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
-    zstyle ':vcs_info:*' formats "$vcstype [%F{cyan}%b%c%u%{$fg_bold[$pcc[3]]%}] "
+    zstyle ':vcs_info:*' formats "$vcstype [%{%F{cyan}%}%b%c%u%{$fg_bold[$pcc[3]]%}] "
   } else {
-    zstyle ':vcs_info:*' formats "$vcstype [%F{cyan}%b%c%u%{$fg_bold[red]%}*%{$fg_bold[$pcc[3]]%}] "
+    zstyle ':vcs_info:*' formats "$vcstype [%{%F{cyan}%}%b%c%u%{$fg_bold[red]%}*%{$fg_bold[$pcc[3]]%}] "
   }
 
   vcs_info
