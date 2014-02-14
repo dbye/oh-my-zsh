@@ -169,3 +169,5 @@ prompt_setup_precmd () {
 
   vcs_info
 }
+
+export GREP_COLOR="7;31"
