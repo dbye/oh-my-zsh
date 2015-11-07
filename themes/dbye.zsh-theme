@@ -108,6 +108,7 @@ p_user="%(0#.%{$bg[$pcc[6]]%}%{$fg[$pcc[7]]%}%n%{$bg[default]%}.%{$fg[$pcc[3]]%}
 p_usercwd="%{$pc['<']%}$p_user%{$fg[$pcc[3]]%}@%m%{$fg[default]%}$p_win%{$fg[$pcc[5]]%}:%{$fg[$pcc[4]]%}%~%{$pc['>']%}"
 
 p_ruby_ver="%(2V.$pc['\[']%{$fg[$pcc[2]]%}%2v/%3v$pc['\]'].)"
+p_python_ver="%(5V.$pc['\[']%{$fg[$pcc[2]]%}%5v/%4v$pc['\]'].)"
 
 p_shlvlhist="%{$fg_bold[$pcc[4]]%}zsh%(2L./$SHLVL.) %b%{$fg[$pcc[5]]%}%h "
 p_rc="%(?..$pc['\[']%{$fg[red]%}%?%1v$pc['\]'] )"
@@ -117,7 +118,7 @@ p_rc="%(?..$pc['\[']%{$fg[red]%}%?%1v$pc['\]'] )"
 p_end="%f%B%(0#.%{%F{red}%}#.%%)%f%b "
 
 
-PROMPT='$p_date$p_ruby_ver 
+PROMPT='$p_date$p_ruby_ver$p_python_ver 
 $p_usercwd
 $p_shlvlhist$p_rc$vcs_info_msg_0_$p_end'
 
@@ -159,6 +160,31 @@ prompt_setup_precmd () {
     "system" ) psvar[2]="system ($(ruby --version | awk '{print $2}'))" ;;
     *) psvar[2]=$ruby ;;
   esac
+
+  if $(which pyenv 2>&1 > /dev/null); then
+    python="$(pyenv version-name)"
+
+    # Are we in the global, local or shell-specific environment?
+    pyenv_scope=`pyenv version-origin`
+
+    case $pyenv_scope in
+      *variable )
+        psvar[4]="pyenv(shell)" ;;
+      *.python-version )
+        psvar[4]="pyenv(local)" ;;
+      *version )
+        psvar[4]="pyenv(global)" ;;
+      * )  psvar[4]="pyenv" ;;
+    esac
+  else
+    python=""
+  fi
+  case $python in
+    "" )  psvar[5]="" ;;
+    "system" ) psvar[5]="system ($(python -V 2>&1 | awk '{print $2}'))" ;;
+    * ) psvar[5]=$python ;;
+  esac 
+
 
   vcstype=" %{$fg_bold[$pcc[3]]%}(%s)"
   if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
