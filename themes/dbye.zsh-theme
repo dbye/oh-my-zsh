@@ -167,14 +167,21 @@ prompt_setup_precmd () {
     # Are we in the global, local or shell-specific environment?
     pyenv_scope=`pyenv version-origin`
 
+    # furthermore, we need to indicate if we're using a virtualenv
+    if [ -n "$VIRTUAL_ENV" ]; then
+        src="venv"
+    else
+        src="pyenv"
+    fi
+
     case $pyenv_scope in
       *variable )
-        psvar[4]="pyenv(shell)" ;;
+        psvar[4]="${src}(shell)" ;;
       *.python-version )
-        psvar[4]="pyenv(local)" ;;
+        psvar[4]="${src}(local)" ;;
       *version )
-        psvar[4]="pyenv(global)" ;;
-      * )  psvar[4]="pyenv" ;;
+        psvar[4]="${src}(global)" ;;
+      * )  psvar[4]="${src}" ;;
     esac
   else
     python=""
