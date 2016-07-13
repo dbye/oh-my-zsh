@@ -97,7 +97,8 @@ pc['\(']="%{$fg[$pcc[1]]%}("
 pc['\)']="%{$fg[$pcc[1]]%})"
 
 # Set the date:
-p_date="%{$pc['\[']%}%F{$pcc[2]}%D{%a %y/%m/%d %R %Z}%{$pc['\]']%}"
+#p_date="%{$pc['\[']%}%F{$pcc[2]}%D{%a %y/%m/%d %R %Z}%{$pc['\]']%}"
+p_date="%{$pc['\[']%}%F{$pcc[2]}%D{%a %b %d %R %Z}%{$pc['\]']%}"
 
 # If screen is running, add its current window number to the prompt
 [[ -n "$WINDOW" ]] && p_win="%{$pc['\(']%}%{$fg[$pcc[4]]%}$WINDOW%{$pc['\)']%}"
