@@ -111,7 +111,7 @@ p_usercwd="%{$pc['<']%}$p_user%{$fg[$pcc[3]]%}@%m%{$fg[default]%}$p_win%{$fg[$pc
 p_ruby_ver="%(2V.$pc['\[']%{$fg[$pcc[2]]%}%2v/%3v$pc['\]'].)"
 p_python_ver="%(5V.$pc['\[']%{$fg[$pcc[2]]%}%5v/%4v$pc['\]'].)"
 
-p_shlvlhist="%{$fg_bold[$pcc[4]]%}zsh%(2L./$SHLVL.) %b%{$fg[$pcc[5]]%}%h "
+p_shlvlhist="%{$fg_bold[$pcc[1]]%}zsh%(2L./$SHLVL.) %b%{$fg[$pcc[5]]%}%h "
 p_rc="%(?..$pc['\[']%{$fg[red]%}%?%1v$pc['\]'] )"
 
 # As an additional reminder, set the prompt character to print in red
