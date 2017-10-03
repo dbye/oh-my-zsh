@@ -67,6 +67,11 @@
 # git repo status information. I imagine there are better ways of doing 
 # what I have done, so feel free to make any such improvements.
 
+# Set up LS_COLORS for use with gls
+
+d=~/.dircolors
+test -r $d && eval "$(dircolors $d)"
+
 local -a pcc
 local -A pc
 
