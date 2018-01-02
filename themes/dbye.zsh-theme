@@ -1,12 +1,12 @@
 # -*- mode: shell-script(zsh) -*-
 #
 # A prompt theme for oh-my-zsh, based largely on prompt_clint that
-# ships with zsh. The vcs_info zstyle is a slightly modified version 
+# ships with zsh. The vcs_info zstyle is a slightly modified version
 # of what you'll find in the kolo oh-my-zsh theme.
 
-# The $pcc array holds colours. The defaults work well on a black or blue 
+# The $pcc array holds colours. The defaults work well on a black or blue
 # background, but if you want to customize them, you just need to set your
-# overrides in ~/.zshrc *before* the line that loads oh-my-zsh.sh. The 
+# overrides in ~/.zshrc *before* the line that loads oh-my-zsh.sh. The
 # different values are:
 
 # pcc[1] - paired characters - [], (), <>. By default these are yellow if
@@ -33,7 +33,7 @@
 # "/rbenv" if, for some reason, we're unable to detect any of the preceding.
 #
 # rvm users will see the current rvm environment, as printed by rvm-prompt,
-# followed by "/rvm". 
+# followed by "/rvm".
 #
 # In both cases, if you are currently using the system default ruby,
 # you will see "system (`ruby --version | awk '{prnit $2}'`)" followed by
@@ -47,7 +47,7 @@
 #
 # The third line shows the string "zsh" followed by "/$SHLVL" if $SHLVL is
 # greater than 1, followed by the history number of the last command, followed
-# by the exit status of the last command, if not 0, followed by any vcs 
+# by the exit status of the last command, if not 0, followed by any vcs
 # information if the current directory is under version control (git and
 # svn are enabled by default), followed by either "$" in your default text
 # colour, or "#" in bold red if currently running as root.
@@ -57,14 +57,14 @@
 # ${branchname} is the name of the currently checked-out branch,
 # ${staged} is a bold green '*' (indicating staged changes in the repo)
 # ${unstaged} is a bold yellow '*' (unstaged changes in the repo), and
-# ${untracked} is a bold red '*', indicating files that are not tracked and 
+# ${untracked} is a bold red '*', indicating files that are not tracked and
 #       not ignored in either a global ignores or a local .gitignore file.
 
 ############################
 # DISCLAIMER
 # This is my first attempt at writing a useable zsh prompt. I have been
 # using clint for the last year or so, but wanted to integrate ruby and
-# git repo status information. I imagine there are better ways of doing 
+# git repo status information. I imagine there are better ways of doing
 # what I have done, so feel free to make any such improvements.
 
 # Set up LS_COLORS for use with gls
@@ -123,8 +123,7 @@ p_rc="%(?..$pc['\[']%{$fg[red]%}%?%1v$pc['\]'] )"
 # if the shell's EUID is 0
 p_end="%f%B%(0#.%{%F{red}%}#.%%)%f%b "
 
-
-PROMPT='$p_date$p_ruby_ver$p_python_ver 
+PROMPT='$p_date$p_ruby_ver$p_python_ver
 $p_usercwd
 $p_shlvlhist$p_rc$vcs_info_msg_0_$p_end'
 
@@ -145,13 +144,13 @@ prompt_setup_precmd () {
 
     # Are we in the global, local or shell-specific environment?
     rbenv_scope=`rbenv version-origin`
-    
+
     case $rbenv_scope in
-      *variable ) 
+      *variable )
           psvar[3]="rbenv(shell)" ;;
-      *.ruby-version ) 
+      *.ruby-version )
           psvar[3]="rbenv(local)" ;;
-      *version ) 
+      *version )
           psvar[3]="rbenv(global)" ;;
       *)  psvar[3]="rbenv" ;;
     esac
@@ -196,7 +195,7 @@ prompt_setup_precmd () {
     "" )  psvar[5]="" ;;
     "system" ) psvar[5]="system ($(python -V 2>&1 | awk '{print $2}'))" ;;
     * ) psvar[5]=$python ;;
-  esac 
+  esac
 
 
   vcstype=" %{$fg_bold[$pcc[3]]%}(%s)"
