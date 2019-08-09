@@ -61,7 +61,7 @@ bundle_install() {
   else
     local bundler_version=`bundle version | cut -d' ' -f3`
     if [[ $bundler_version > '1.4.0' || $bundler_version = '1.4.0' ]]; then
-      if [[ "$OSTYPE" = (darwin|freebsd)* ]]
+      if [[ "$OSTYPE" = darwin* || "$OSTYPE" = freebsd* ]]
       then
         local cores_num="$(sysctl -n hw.ncpu)"
       else
